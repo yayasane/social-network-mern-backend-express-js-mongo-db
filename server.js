@@ -5,8 +5,14 @@ require('dotenv').config({ path: './config/.env' })
 // dotenv.config({ path: './config/.env' })
 require('./config/db')
 // import './config/db.js'
+const userRoutes = require('./routes/user.routes')
+// import userRoutes from './routes/user.routes.js'
 
 const app = express()
+//middleware
+app.use(express.json())
+//routes
+app.use('/api/user', userRoutes)
 
 //server
 app.listen(process.env.PORT, () => {
