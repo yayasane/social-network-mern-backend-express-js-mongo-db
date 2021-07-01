@@ -9,6 +9,7 @@ require('./config/db')
 const userRoutes = require('./routes/user.routes')
 // import userRoutes from './routes/user.routes.js'
 const { checkUser, requireAuth } = require('./middleware/auth.middleware')
+const postRoutes = require('./routes/post.routes')
 
 const app = express()
 //middleware
@@ -23,6 +24,7 @@ app.use('/jwtid', requireAuth, (req, resp) => {
 
 //routes
 app.use('/api/user', userRoutes)
+app.use('/api/post', postRoutes)
 
 //server
 app.listen(process.env.PORT, () => {
