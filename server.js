@@ -10,8 +10,19 @@ const userRoutes = require('./routes/user.routes')
 // import userRoutes from './routes/user.routes.js'
 const { checkUser, requireAuth } = require('./middleware/auth.middleware')
 const postRoutes = require('./routes/post.routes')
+const cors = require('cors')
 
 const app = express()
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  allowedHeaders: ['sessionId', 'Content-Type'],
+  exposedHeaders: ['sessionId'],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+}
+app.use(cors(corsOptions))
+
 //middleware
 app.use(express.json())
 app.use(cookieParser())
@@ -19,7 +30,7 @@ app.use(cookieParser())
 //jwt
 app.get('*', checkUser)
 app.use('/jwtid', requireAuth, (req, resp) => {
-  resp.status(500).send(resp.locals.user)
+  resp.status(200).send(resp.locals.user._id)
 })
 
 //routes
